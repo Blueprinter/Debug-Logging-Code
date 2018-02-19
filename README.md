@@ -1,6 +1,8 @@
 # Debug-Logging-Code
 Apps Script Debug Logging
 
+The code in the file named "Code GS" is to log variable values from Google Apps Script to a Google Spreadsheet
+
 FEATURES:
 * Log each of your function variable values to different sheet tabs
 * Null, undefined, empty strings, and numbers correctly indicated in the spreadsheet
