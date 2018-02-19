@@ -1,0 +1,128 @@
+var LOG_GLOBAL = {'start':true};
+var d = new Date();
+LOG_GLOBAL.d = d;
+var SS_ID = 'Your spreadsheet File ID here';
+
+function zxz(a,b,c,whichSheetTab) {
+try{
+  var clearEachRun,data,i,ss,sh,thisVal,typeOfThisVal;
+  //USER INPUT
+  clearEachRun = false;
+  //Logger.log('pzp ran')
+  //END OF USER INPUT
+  
+  if (!whichSheetTab) {
+    whichSheetTab = 1;
+  } else {
+    whichSheetTab = Number(whichSheetTab) - 1;
+  }
+
+  sh = LOG_GLOBAL[whichSheetTab.toString()];//Get the sheet tab that is saved in the global object
+  
+  if (!sh) {
+    ss = SpreadsheetApp.openById(SS_ID);
+    sh = ss.getSheets()[Number(whichSheetTab)];//Get the sheet tab by index number
+    
+    LOG_GLOBAL[whichSheetTab.toString()] = sh;
+    
+    if (clearEachRun && !LOG_GLOBAL.wasCleared) {
+      sh.clearContents();
+      LOG_GLOBAL.wasCleared = true;
+    }
+  }
+
+  data = [];
+  
+  for (i=0;i<3;i++) {//Loop three times for the three values to write
+    if (i===0) {
+      thisVal = a;
+    } else if (i===1) {
+      thisVal = b;
+      //Logger.log('thisVal: ' + thisVal)
+      //Logger.log('typeof thisVal: ' + typeof thisVal)
+    } else {
+      thisVal = c;
+      if (thisVal === undefined) {
+        break;//The third value is often undefined so just leave it if its undefined
+      }
+    }
+    
+    thisVal = processValForLog(thisVal);
+    data.push(thisVal);
+  }
+  
+  if (LOG_GLOBAL.start) {
+    LOG_GLOBAL.start = false;
+    data.push(LOG_GLOBAL.d);
+  }
+  
+  sh.appendRow(data);
+  SpreadsheetApp.flush();
+}catch(e){
+  Logger.log('Error in pzp: ' + e.message)
+  Logger.log('Error - stack: ' + e.stack)
+  //GmailApp.sendEmail('Your_email@gmail.com', 'caught error',e.stack);
+  sh.appendRow(['Error in pzp: ' + e.message,' stack: ',e.stack]);
+  SpreadsheetApp.flush();
+};
+};
+
+function processValForLog(val) {
+try{
+  var typeOfThisVal;
+  
+    typeOfThisVal = typeof val;
+    
+    if (val) {
+      if (typeOfThisVal === 'object') {//The variable val can be an object and still be null
+      
+        if (Array.isArray(val)) {//The very first test should be for an array because that is easy to check for
+          //Logger.log('it is an array')
+          val = val.toString();
+          //Logger.log('val: ' + val)
+        } else {//It is an object but not an array
+          
+          try{
+            val = JSON.stringify(val);//Test for whether it is a date
+          }catch(e) {//If this is an invalid date then JSON stringify will fail
+            
+          }
+        }
+        
+        //Logger.log('typeof val: ' + typeof val)
+        
+        if (typeof val !== 'string') {
+          try{
+            val = val.toString();
+          }catch(e) {
+            val = e.message;
+          }
+        }
+        
+        if (val.indexOf("{") !== 0 && typeof val !== 'string') {
+          val = val.toString();
+        }
+        
+        //continue;
+      }
+    }
+    
+    if (typeOfThisVal === 'number') {
+      val = '"' + val.toString();
+    }
+    
+    if (val === undefined) {//Avoid having all three cells undefined
+      val = 'UNDEFINEDDD';
+    } else if (val === null) {
+      val = 'NULLLL';
+    } else if (val === false) {
+      val = 'FALZZE';
+    } else if (val === true) {
+      val = 'TREWWW';
+    }
+  
+  return val;
+}catch(e){
+  //GmailApp.sendEmail('Your_email@gmail.com', 'caught error in processValForLog',e.stack);
+};
+}
