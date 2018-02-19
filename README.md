@@ -45,6 +45,12 @@ pzp.zxz('variable_name',variable_name,"function_name",2)//Call the library and t
 
 The characters pzp.zxz are very unique and therefore easy to search and replace without replacing content that you don't want changed
 
+To use the code in a library, create a new Apps Script stand alone file, copy and paste in the code into the stand alone file, and save the apps script project.  In the File Menu, choose "Manage Versions" and save a new version. In the File menu, choose "Project properties"  Copy the "Project Key (Deprecated)
+
+https://developers.google.com/apps-script/guides/libraries#creating_a_library
+
+In the Apps Script project where you want to use the logging code, click the "Resources" menu and choose "Library"  Enter the Key into the field at the bottom of the window, and click "Add".  Make sure to choose the version number, and put in an identifier.
+
 To avoid needing to enter the function name (parameter c) in every function call, I add a variable associated with a function in every function.
 
 function myFunction() {
