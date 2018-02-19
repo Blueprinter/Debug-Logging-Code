@@ -4,6 +4,8 @@ Apps Script Debug Logging
 FEATURES:
 * Log each of your function variable values to different sheet tabs
 * Null, undefined, empty strings, and numbers correctly indicated in the spreadsheet
+* Stringifys JSON objects and arrays before saving to the spreadsheet cell
+* Test for date objects and displays the value correctly
 
 SET UP:
 * Create a new Google Spreadsheet for receiving the logging output
