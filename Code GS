@@ -65,7 +65,7 @@ try{
   if (sh) {
     sh.appendRow(['Error in pzp: ' + e.message,' stack: ',e.stack]);
   } else {
-    GmailApp.sendEmail('example@gmail.com', 'caught error',e.stack);
+    GmailApp.sendEmail('example@gmail.com', 'Error','message: ' + e.message + "\n\nStack: " + e.stack);
   }
   
   SpreadsheetApp.flush();
