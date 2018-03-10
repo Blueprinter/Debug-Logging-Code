@@ -59,8 +59,8 @@ try{
   sh.appendRow(data);
   SpreadsheetApp.flush();
 }catch(e){
-  Logger.log('Error in pzp: ' + e.message)
-  Logger.log('Error - stack: ' + e.stack)
+  Logger.log('Error in pzp: ' + e.message)//NOTE !! the log will show up in the code with the library if this is added
+  Logger.log('Error - stack: ' + e.stack)//as a library
   
   if (sh) {
     sh.appendRow(['Error in pzp: ' + e.message,' stack: ',e.stack]);
