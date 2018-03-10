@@ -61,8 +61,13 @@ try{
 }catch(e){
   Logger.log('Error in pzp: ' + e.message)
   Logger.log('Error - stack: ' + e.stack)
-  //GmailApp.sendEmail('Your_email@gmail.com', 'caught error',e.stack);
-  sh.appendRow(['Error in pzp: ' + e.message,' stack: ',e.stack]);
+  
+  if (sh) {
+    sh.appendRow(['Error in pzp: ' + e.message,' stack: ',e.stack]);
+  } else {
+    GmailApp.sendEmail('example@gmail.com', 'caught error',e.stack);
+  }
+  
   SpreadsheetApp.flush();
 };
 };
