@@ -13,6 +13,7 @@ SET UP:
 * Create a new Google Spreadsheet for receiving the logging output
 * Put the file ID of the Google Spreadsheet into the Apps Script code
 var SS_ID = 'PUT THE SPREADSHEET FILE ID HERE';
+* Run a function from the code editor to get a prompt for authorizing the permissions - otherwise the code will fail
 
 The function name is zxz
 
